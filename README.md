@@ -1,3 +1,7 @@
+# SM64 SOURCE BUT I ADD RANDOM SHIT TO IT
+
+- Everything is in the other branches lmao
+
 # Super Mario 64
 
 - This repo contains a full decompilation of Super Mario 64 (J), (U), (E), and (SH).
