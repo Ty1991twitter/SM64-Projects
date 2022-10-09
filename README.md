@@ -1,6 +1,6 @@
-# SM64 PHYSICS EDIT 
+# SM64 - Tyler's Repo
 
-- Super Mario 64 But I edit every entities physics lmao
+- Anything I add or edit will be in a separate branch 
 
 # Super Mario 64
 
