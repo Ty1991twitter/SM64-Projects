@@ -1,6 +1,6 @@
-# SM64 PHYSICS EDIT 
+# SM64 TESTING BRANCH
 
-- Super Mario 64 But I edit every entities physics lmao
+- Just adding random shits here.
 
 # Super Mario 64
 
