@@ -1,6 +1,6 @@
-# SM64 - Tyler's Repo
+# SM64 Widescreen Support
 
-- Anything I add or edit will be in a separate branch 
+- It's in the branches name lmao
 
 # Super Mario 64
 
