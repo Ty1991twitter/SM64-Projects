@@ -18,7 +18,7 @@
 #define MESG_VI_VBLANK 102
 #define MESG_START_GFX_SPTASK 103
 #define MESG_NMI_REQUEST 104
-
+OSViMode VI;
 OSThread D_80339210; // unused?
 OSThread gIdleThread;
 OSThread gMainThread;
@@ -426,14 +426,14 @@ void thread1_idle(UNUSED void *arg) {
     osCreateViManager(OS_PRIORITY_VIMGR);
 #if defined(VERSION_US) || defined(VERSION_SH)
     if (sp24 == TV_TYPE_NTSC) {
-        osViSetMode(&osViModeTable[OS_VI_NTSC_LAN1]);
+      VI =   osViSetMode(&osViModeTable[OS_VI_NTSC_LAN1]);
     } else {
-        osViSetMode(&osViModeTable[OS_VI_PAL_LAN1]);
+        VI = osViSetMode(&osViModeTable[OS_VI_PAL_LAN1]);
     }
 #elif defined(VERSION_JP)
-    osViSetMode(&osViModeTable[OS_VI_NTSC_LAN1]);
+      VI = osViSetMode(&osViModeTable[OS_VI_NTSC_LAN1]);
 #else // VERSION_EU
-    osViSetMode(&osViModeTable[OS_VI_PAL_LAN1]);
+    VI = osViSetMode(&osViModeTable[OS_VI_PAL_LAN1]);
 #endif
     osViBlack(TRUE);
     osViSetSpecialFeatures(OS_VI_DITHER_FILTER_ON);

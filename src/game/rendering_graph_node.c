@@ -64,6 +64,11 @@ s16 gCurrAnimFrame;
 f32 gCurrAnimTranslationMultiplier;
 u16 *gCurrAnimAttribute;
 s16 *gCurrAnimData;
+f32 aspect;
+f32 aspectmultiplyer = 1.0f;
+f32 screenwidthmultiplyer  = 1.0f
+f32 screenhightmultiplyer = 1.0f;
+u8 widescreen;
 
 struct AllocOnlyPool *gDisplayListHeap;
 
@@ -243,11 +248,7 @@ static void geo_process_perspective(struct GraphNodePerspective *node) {
         u16 perspNorm;
         Mtx *mtx = alloc_display_list(sizeof(*mtx));
 
-#ifdef VERSION_EU
-        f32 aspect = ((f32) gCurGraphNodeRoot->width / (f32) gCurGraphNodeRoot->height) * 1.1f;
-#else
-        f32 aspect = (f32) gCurGraphNodeRoot->width / (f32) gCurGraphNodeRoot->height;
-#endif
+                  aspect = (4.0 / 3.0f) * aspectmultiplyer
 
         guPerspective(mtx, &perspNorm, node->fov, aspect, node->near, node->far, 1.0f);
         gSPPerspNormalize(gDisplayListHead++, perspNorm);
@@ -755,18 +756,18 @@ static s32 obj_is_in_view(struct GraphNodeObject *node, Mat4 matrix) {
     // ! @bug The aspect ratio is not accounted for. When the fov value is 45,
     // the horizontal effective fov is actually 60 degrees, so you can see objects
     // visibly pop in or out at the edge of the screen.
-    halfFov = (gCurGraphNodeCamFrustum->fov / 2.0f + 1.0f) * 32768.0f / 180.0f + 0.5f;
+    halfFov = (gCurGraphNodeCamFrustum->fov / * aspect + 1.0f) * 32768.0f / 180.0f + 0.5f;
 
     hScreenEdge = -matrix[3][2] * sins(halfFov) / coss(halfFov);
     // -matrix[3][2] is the depth, which gets multiplied by tan(halfFov) to get
     // the amount of units between the center of the screen and the horizontal edge
     // given the distance from the object to the camera.
 
-#ifdef WIDESCREEN
+
     // This multiplication should really be performed on 4:3 as well,
     // but the issue will be more apparent on widescreen.
     hScreenEdge *= GFX_DIMENSIONS_ASPECT_RATIO;
-#endif
+
 
     if (geo != NULL && geo->type == GRAPH_NODE_TYPE_CULLING_RADIUS) {
         cullingRadius =
@@ -1052,7 +1053,32 @@ void geo_process_root(struct GraphNodeRoot *node, Vp *b, Vp *c, s32 clearColor) 
         gMatStackIndex = 0;
         gCurrAnimType = 0;
         vec3s_set(viewport->vp.vtrans, node->x * 4, node->y * 4, 511);
-        vec3s_set(viewport->vp.vscale, node->width * 4, node->height * 4, 511);
+        vec3s_set(viewport->vp.vscale, node->width * 4) * screenwidthmultiplyer, (node->height * 4,) * screenheightmultiplyer, 511);
+        if (gPlayer1Controller->buttonDown == U_JPAD) {
+            screenheightmultiplier+= 0.05;
+        }
+        if (gPlayer1Controller->buttonDown == D_JPAD) {
+            screenheightmultiplier-= 0.05;
+        }
+        if (gPlayer1Controller->buttonDown == L_JPAD) {
+            screenwidthmultiplier-= 0.05;
+        }
+        if (gPlayer1Controller->buttonDown == R_JPAD) {
+            screenwidthmultiplier+= 0.05;
+        }
+        if (gPlayer1Controller->buttonDown == L_TRIG) {
+            aspectmultiplyer+=0.25;
+        }
+        if (gPlayer1Controller->buttonDown == Z_TRIG) {
+            aspectmultiplyer-=0.25;
+        }
+        print_text_fmt_int(220, 100, "ASPECT %d", aspect);
+        print_text_fmt_int(220, 75, "WIDTH %d", screenwidthmultiplier);
+        print_text_fmt_int(220, 50, "HEIGHT %d", screenheightmultiplier);
+
+        if (node->width < 0) {
+            node->width = 0;
+        }
         if (b != NULL) {
             clear_framebuffer(clearColor);
             make_viewport_clip_rect(b);
