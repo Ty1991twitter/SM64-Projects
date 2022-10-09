@@ -1,4 +1,4 @@
-# SM64 SOURCE BUT I ADD RANDOM SHIT TO IT
+# SM64 SOURCE TYLER-FIED
 
 - Everything is in the other branches lmao
 
