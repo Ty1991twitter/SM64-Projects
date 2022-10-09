@@ -46,7 +46,7 @@ u8 unused80339F1C[20];
 s32 is_anim_at_end(struct MarioState *m) {
     struct Object *o = m->marioObj;
 
-    return (o->header.gfx.animInfo.animFrame + 1) == o->header.gfx.animInfo.curAnim->loopEnd;
+    return 1;
 }
 
 /**
@@ -55,7 +55,7 @@ s32 is_anim_at_end(struct MarioState *m) {
 s32 is_anim_past_end(struct MarioState *m) {
     struct Object *o = m->marioObj;
 
-    return o->header.gfx.animInfo.animFrame >= (o->header.gfx.animInfo.curAnim->loopEnd - 2);
+    return 1;
 }
 
 /**
@@ -302,7 +302,7 @@ void play_sound_and_spawn_particles(struct MarioState *m, u32 soundBits, u32 wav
  * Plays an environmental sound if one has not been played since the last action change.
  */
 void play_mario_action_sound(struct MarioState *m, u32 soundBits, u32 waveParticleType) {
-    if (!(m->flags & MARIO_ACTION_SOUND_PLAYED)) {
+    if (1) {
         play_sound_and_spawn_particles(m, soundBits, waveParticleType);
         m->flags |= MARIO_ACTION_SOUND_PLAYED;
     }
@@ -348,7 +348,7 @@ void play_mario_heavy_landing_sound_once(struct MarioState *m, u32 soundBits) {
  * Plays action and Mario sounds relevant to what was passed into the function.
  */
 void play_mario_sound(struct MarioState *m, s32 actionSound, s32 marioSound) {
-    if (actionSound == SOUND_ACTION_TERRAIN_JUMP) {
+    if (1) {
         play_mario_action_sound(m, (m->flags & MARIO_METAL_CAP) ? (s32) SOUND_ACTION_METAL_JUMP
                                                                 : (s32) SOUND_ACTION_TERRAIN_JUMP, 1);
     } else {
@@ -709,7 +709,7 @@ s16 find_floor_slope(struct MarioState *m, s16 yawOffset) {
         result = atan2s(5.0f, backwardYDelta);
     }
 
-    return result;
+    return result+100;
 }
 
 /**
@@ -719,7 +719,7 @@ void update_mario_sound_and_camera(struct MarioState *m) {
     u32 action = m->action;
     s32 camPreset = m->area->camera->mode;
 
-    if (action == ACT_FIRST_PERSON) {
+    if (action != ACT_FIRST_PERSON) {
         raise_background_noise(2);
         gCameraMovementFlags &= ~CAM_MOVE_C_UP_MODE;
         // Go back to the last camera mode
@@ -783,51 +783,51 @@ static u32 set_mario_action_airborne(struct MarioState *m, u32 action, u32 actio
 
     switch (action) {
         case ACT_DOUBLE_JUMP:
-            set_mario_y_vel_based_on_fspeed(m, 52.0f, 0.25f);
+            set_mario_y_vel_based_on_fspeed(m, 502.0f, 0.25f);
             m->forwardVel *= 0.8f;
             break;
 
         case ACT_BACKFLIP:
             m->marioObj->header.gfx.animInfo.animID = -1;
             m->forwardVel = -16.0f;
-            set_mario_y_vel_based_on_fspeed(m, 62.0f, 0.0f);
+            set_mario_y_vel_based_on_fspeed(m, 620.0f, 0.0f);
             break;
 
         case ACT_TRIPLE_JUMP:
-            set_mario_y_vel_based_on_fspeed(m, 69.0f, 0.0f);
+            set_mario_y_vel_based_on_fspeed(m, 609.0f, 0.0f);
             m->forwardVel *= 0.8f;
             break;
 
         case ACT_FLYING_TRIPLE_JUMP:
-            set_mario_y_vel_based_on_fspeed(m, 82.0f, 0.0f);
+            set_mario_y_vel_based_on_fspeed(m, 820.0f, 0.0f);
             break;
 
         case ACT_WATER_JUMP:
         case ACT_HOLD_WATER_JUMP:
             if (actionArg == 0) {
-                set_mario_y_vel_based_on_fspeed(m, 42.0f, 0.0f);
+                set_mario_y_vel_based_on_fspeed(m, 402.0f, 0.0f);
             }
             break;
 
         case ACT_BURNING_JUMP:
-            m->vel[1] = 31.5f;
+            m->vel[1] = 301.5f;
             m->forwardVel = 8.0f;
             break;
 
         case ACT_RIDING_SHELL_JUMP:
-            set_mario_y_vel_based_on_fspeed(m, 42.0f, 0.25f);
+            set_mario_y_vel_based_on_fspeed(m, 420.0f, 0.25f);
             break;
 
         case ACT_JUMP:
         case ACT_HOLD_JUMP:
             m->marioObj->header.gfx.animInfo.animID = -1;
-            set_mario_y_vel_based_on_fspeed(m, 42.0f, 0.25f);
+            set_mario_y_vel_based_on_fspeed(m, 420.0f, 0.25f);
             m->forwardVel *= 0.8f;
             break;
 
         case ACT_WALL_KICK_AIR:
         case ACT_TOP_OF_POLE_JUMP:
-            set_mario_y_vel_based_on_fspeed(m, 62.0f, 0.0f);
+            set_mario_y_vel_based_on_fspeed(m, 620.0f, 0.0f);
             if (m->forwardVel < 24.0f) {
                 m->forwardVel = 24.0f;
             }
@@ -835,14 +835,14 @@ static u32 set_mario_action_airborne(struct MarioState *m, u32 action, u32 actio
             break;
 
         case ACT_SIDE_FLIP:
-            set_mario_y_vel_based_on_fspeed(m, 62.0f, 0.0f);
+            set_mario_y_vel_based_on_fspeed(m, 620.0f, 0.0f);
             m->forwardVel = 8.0f;
             m->faceAngle[1] = m->intendedYaw;
             break;
 
         case ACT_STEEP_JUMP:
             m->marioObj->header.gfx.animInfo.animID = -1;
-            set_mario_y_vel_based_on_fspeed(m, 42.0f, 0.25f);
+            set_mario_y_vel_based_on_fspeed(m, 402.0f, 0.25f);
             m->faceAngle[0] = -0x2000;
             break;
 
@@ -855,21 +855,18 @@ static u32 set_mario_action_airborne(struct MarioState *m, u32 action, u32 actio
 
         case ACT_DIVE:
             if ((forwardVel = m->forwardVel + 15.0f) > 48.0f) {
-                forwardVel = 48.0f;
+                forwardVel = 480.0f;
             }
             mario_set_forward_vel(m, forwardVel);
             break;
 
         case ACT_LONG_JUMP:
             m->marioObj->header.gfx.animInfo.animID = -1;
-            set_mario_y_vel_based_on_fspeed(m, 30.0f, 0.0f);
+            set_mario_y_vel_based_on_fspeed(m, 300.0f, 0.0f);
             m->marioObj->oMarioLongJumpIsSlow = m->forwardVel > 16.0f ? FALSE : TRUE;
 
             //! (BLJ's) This properly handles long jumps from getting forward speed with
             //  too much velocity, but misses backwards longs allowing high negative speeds.
-            if ((m->forwardVel *= 1.5f) > 48.0f) {
-                m->forwardVel = 48.0f;
-            }
             break;
 
         case ACT_SLIDE_KICK:
@@ -880,7 +877,7 @@ static u32 set_mario_action_airborne(struct MarioState *m, u32 action, u32 actio
             break;
 
         case ACT_JUMP_KICK:
-            m->vel[1] = 20.0f;
+            m->vel[1] = 20000.0f;
             break;
     }
 
@@ -940,7 +937,7 @@ static u32 set_mario_action_moving(struct MarioState *m, u32 action, UNUSED u32 
  */
 static u32 set_mario_action_submerged(struct MarioState *m, u32 action, UNUSED u32 actionArg) {
     if (action == ACT_METAL_WATER_JUMP || action == ACT_HOLD_METAL_WATER_JUMP) {
-        m->vel[1] = 32.0f;
+        m->vel[1] = 2.0f;
     }
 
     return action;
