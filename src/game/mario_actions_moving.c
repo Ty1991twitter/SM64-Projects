@@ -13,6 +13,9 @@
 #include "behavior_data.h"
 #include "rumble_init.h"
 
+#include "mods/mod_loader.h"
+
+
 struct LandingAction {
     s16 numFrames;
     s16 unk02;
@@ -1982,6 +1985,8 @@ s32 mario_execute_moving_action(struct MarioState *m) {
     if (mario_update_quicksand(m, 0.25f)) {
         return TRUE;
     }
+
+    ml_update_character_mods_moving();
 
     /* clang-format off */
     switch (m->action) {

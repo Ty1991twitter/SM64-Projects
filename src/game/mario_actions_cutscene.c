@@ -29,6 +29,8 @@
 #include "sound_init.h"
 #include "rumble_init.h"
 
+#include "mods/mod_loader.h"
+
 static struct Object *sIntroWarpPipeObj;
 static struct Object *sEndPeachObj;
 static struct Object *sEndRightToadObj;
@@ -2689,6 +2691,8 @@ s32 mario_execute_cutscene_action(struct MarioState *m) {
     if (check_for_instant_quicksand(m)) {
         return TRUE;
     }
+
+    ml_update_character_mods_cutscene();
 
     /* clang-format off */
     switch (m->action) {

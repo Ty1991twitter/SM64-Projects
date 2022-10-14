@@ -17,6 +17,8 @@
 #include "level_table.h"
 #include "rumble_init.h"
 
+#include "mods/mod_loader.h"
+
 #define POLE_NONE          0
 #define POLE_TOUCHED_FLOOR 1
 #define POLE_FELL_OFF      2
@@ -859,6 +861,8 @@ s32 mario_execute_automatic_action(struct MarioState *m) {
     }
 
     m->quicksandDepth = 0.0f;
+
+    ml_update_character_mods_automatic();
 
     /* clang-format off */
     switch (m->action) {
