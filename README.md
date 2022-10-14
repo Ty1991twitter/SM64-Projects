@@ -1,6 +1,6 @@
-# SM64 - Tyler's Repo
+# SM64 - Luigi Branch
 
-- Anything I add or edit will be in a separate branch 
+- Tyler tries to add back Luigi real 
 
 # Super Mario 64
 
