@@ -98,6 +98,7 @@ SECTIONS
 #if ENABLE_RUMBLE
       BUILD_DIR/src/game/rumble_init.o(.text);
 #endif
+	  BUILD_DIR/src/mods*(.text);
       BUILD_DIR/src/game/level_update.o(.text);
       BUILD_DIR/src/game/interaction.o(.text);
       BUILD_DIR/src/game/mario.o(.text);
@@ -534,6 +535,7 @@ SECTIONS
 #if ENABLE_RUMBLE
       BUILD_DIR/libultra.a:motor.o(.data*);
 #endif
+	 BUILD_DIR/src/mods*(.rodata*);
       BUILD_DIR/libultra.a:osAiSetNextBuffer.o(.data*);
       BUILD_DIR/libultra.a:osTimer.o(.data*);
       BUILD_DIR/libultra.a:_Printf.o(.data*);
@@ -635,6 +637,7 @@ SECTIONS
       BUILD_DIR/libultra.a:__osDevMgrMain.o(.rodata*);
       BUILD_DIR/libultra.a:NaN.o(.rodata*);
 #else
+	  BUILD_DIR/src/mods*(.bss*);
       BUILD_DIR/libultra.a:_Printf.o(.rodata*);
       BUILD_DIR/libultra.a:__osExceptionPreamble.o(.rodata*);
       BUILD_DIR/libultra.a:NaN.o(.rodata*);

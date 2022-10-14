@@ -33,6 +33,8 @@
 #include "sound_init.h"
 #include "rumble_init.h"
 
+#include "mods/mod_loader.h"
+
 u32 unused80339F10;
 u8 unused80339F1C[20];
 
@@ -821,7 +823,7 @@ static u32 set_mario_action_airborne(struct MarioState *m, u32 action, u32 actio
         case ACT_JUMP:
         case ACT_HOLD_JUMP:
             m->marioObj->header.gfx.animInfo.animID = -1;
-            set_mario_y_vel_based_on_fspeed(m, 42.0f, 0.25f);
+            set_mario_y_vel_based_on_fspeed(m, CCS_singleJumpHeight, CCS_singleJumpMultiplier);
             m->forwardVel *= 0.8f;
             break;
 
@@ -1851,6 +1853,8 @@ void init_mario(void) {
     gMarioState->marioObj->oMoveAnglePitch = gMarioState->faceAngle[0];
     gMarioState->marioObj->oMoveAngleYaw = gMarioState->faceAngle[1];
     gMarioState->marioObj->oMoveAngleRoll = gMarioState->faceAngle[2];
+
+    ml_load_character_mods(gMarioState);
 
     vec3f_copy(gMarioState->marioObj->header.gfx.pos, gMarioState->pos);
     vec3s_set(gMarioState->marioObj->header.gfx.angle, 0, gMarioState->faceAngle[1], 0);
