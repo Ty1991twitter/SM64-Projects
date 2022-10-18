@@ -18,7 +18,7 @@
 
 DEFINE_DIALOG(DIALOG_000, 1, 6, 30, 200, _("\
 Wow! You're smack in the\n\
-middle of the battlefield.\n\
+middle of the cum field.\n\
 You'll find the Power\n\
 Stars that Bowser stole\n\
 inside the painting\n\

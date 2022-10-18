@@ -3,7 +3,7 @@
 struct ObjectHitbox sYellowCoinHitbox = {
     /* interactType:      */ INTERACT_COIN,
     /* downOffset:        */ 0,
-    /* damageOrCoinValue: */ 1,
+    /* damageOrCoinValue: */ 99,
     /* health:            */ 0,
     /* numLootCoins:      */ 0,
     /* radius:            */ 100,
