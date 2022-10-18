@@ -1,6 +1,6 @@
-# SM64 - Tyler's Repo
+# SM64 - Better Physics Mod
 
-- Anything I add or edit will be in a separate branch 
+- This mod just adds the newer Mario games physics lol (I think)
 
 # Super Mario 64
 
