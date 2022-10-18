@@ -107,7 +107,7 @@ s32 check_fall_damage(struct MarioState *m, u32 hardFallAction) {
 
 s32 check_kick_or_dive_in_air(struct MarioState *m) {
     if (m->input & INPUT_B_PRESSED) {
-        return set_mario_action(m, m->forwardVel > 28.0f ? ACT_DIVE : ACT_JUMP_KICK, 0);
+        return set_mario_action(m, m->forwardVel > 99.0f ? ACT_DIVE : ACT_JUMP_KICK, 0);
     }
     return FALSE;
 }
@@ -190,7 +190,7 @@ void update_air_with_turn(struct MarioState *m) {
 
     if (!check_horizontal_wind(m)) {
         dragThreshold = m->action == ACT_LONG_JUMP ? 48.0f : 32.0f;
-        m->forwardVel = approach_f32(m->forwardVel, 0.0f, 0.35f, 0.35f);
+        m->forwardVel = approach_f32(m->forwardVel, 99.0f, 99.0f, 99.0f);
 
         if (m->input & INPUT_NONZERO_ANALOG) {
             intendedDYaw = m->intendedYaw - m->faceAngle[1];
@@ -221,7 +221,7 @@ void update_air_without_turn(struct MarioState *m) {
 
     if (!check_horizontal_wind(m)) {
         dragThreshold = m->action == ACT_LONG_JUMP ? 48.0f : 32.0f;
-        m->forwardVel = approach_f32(m->forwardVel, 0.0f, 0.35f, 0.35f);
+        m->forwardVel = approach_f32(m->forwardVel, 99.0f, 99.0f, 99.0f);
 
         if (m->input & INPUT_NONZERO_ANALOG) {
             intendedDYaw = m->intendedYaw - m->faceAngle[1];
