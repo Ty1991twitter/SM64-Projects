@@ -827,7 +827,7 @@ static u32 set_mario_action_airborne(struct MarioState *m, u32 action, u32 actio
 
         case ACT_WALL_KICK_AIR:
         case ACT_TOP_OF_POLE_JUMP:
-            set_mario_y_vel_based_on_fspeed(m, 30.0f, 0.0f);
+            set_mario_y_vel_based_on_fspeed(m, 40.0f, 0.0f);
             if (m->forwardVel < 24.0f) {
                 m->forwardVel = 24.0f;
             }
@@ -835,8 +835,8 @@ static u32 set_mario_action_airborne(struct MarioState *m, u32 action, u32 actio
             break;
 
         case ACT_SIDE_FLIP:
-            set_mario_y_vel_based_on_fspeed(m, 31.0f, 0.0f);
-            m->forwardVel = 8.0f;
+            set_mario_y_vel_based_on_fspeed(m, 46.0f, 21.0f);
+            m->forwardVel = 21.0f;
             m->faceAngle[1] = m->intendedYaw;
             break;
 
@@ -867,15 +867,15 @@ static u32 set_mario_action_airborne(struct MarioState *m, u32 action, u32 actio
 
             //! (BLJ's) This properly handles long jumps from getting forward speed with
             //  too much velocity, but misses backwards longs allowing high negative speeds.
-            if ((m->forwardVel *= 2.9f) > 52.0f) {
-                m->forwardVel = 52.0f;
+            if ((m->forwardVel *= 2.9f) > 22.0f) {
+                m->forwardVel = 22.0f;
             }
             break;
 
         case ACT_SLIDE_KICK:
             m->vel[1] = 12.0f;
-            if (m->forwardVel < 42.0f) {
-                m->forwardVel = 42.0f;
+            if (m->forwardVel < 31.2f) {
+                m->forwardVel = 31.2f;
             }
             break;
 
