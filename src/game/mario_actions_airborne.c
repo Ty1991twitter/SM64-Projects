@@ -34,7 +34,7 @@ void play_far_fall_sound(struct MarioState *m) {
 
 #ifndef VERSION_JP
 void play_knockback_sound(struct MarioState *m) {
-    if (m->actionArg == 0 && (m->forwardVel <= -28.0f || m->forwardVel >= 28.0f)) {
+    if (m->actionArg == 0 && (m->forwardVel <= -32.0f || m->forwardVel >= 32.0f)) {
         play_sound_if_no_flag(m, SOUND_MARIO_DOH, MARIO_MARIO_SOUND_PLAYED);
     } else {
         play_sound_if_no_flag(m, SOUND_MARIO_UH, MARIO_MARIO_SOUND_PLAYED);
@@ -45,8 +45,8 @@ void play_knockback_sound(struct MarioState *m) {
 s32 lava_boost_on_wall(struct MarioState *m) {
     m->faceAngle[1] = atan2s(m->wall->normal.z, m->wall->normal.x);
 
-    if (m->forwardVel < 24.0f) {
-        m->forwardVel = 24.0f;
+    if (m->forwardVel < 31.0f) {
+        m->forwardVel = 31.0f;
     }
 
     if (!(m->flags & MARIO_METAL_CAP)) {
@@ -107,7 +107,7 @@ s32 check_fall_damage(struct MarioState *m, u32 hardFallAction) {
 
 s32 check_kick_or_dive_in_air(struct MarioState *m) {
     if (m->input & INPUT_B_PRESSED) {
-        return set_mario_action(m, m->forwardVel > 28.0f ? ACT_DIVE : ACT_JUMP_KICK, 0);
+        return set_mario_action(m, m->forwardVel > 30.0f ? ACT_DIVE : ACT_JUMP_KICK, 0);
     }
     return FALSE;
 }
@@ -164,9 +164,9 @@ s32 check_horizontal_wind(struct MarioState *m) {
         if (speed > 48.0f) {
             m->slideVelX = m->slideVelX * 48.0f / speed;
             m->slideVelZ = m->slideVelZ * 48.0f / speed;
-            speed = 32.0f; //! This was meant to be 48?
-        } else if (speed > 32.0f) {
-            speed = 32.0f;
+            speed = 26.0f; //! This was meant to be 48?
+        } else if (speed > 26.0f) {
+            speed = 26.0f;
         }
 
         m->vel[0] = m->slideVelX;
@@ -189,8 +189,8 @@ void update_air_with_turn(struct MarioState *m) {
     f32 intendedMag;
 
     if (!check_horizontal_wind(m)) {
-        dragThreshold = m->action == ACT_LONG_JUMP ? 48.0f : 32.0f;
-        m->forwardVel = approach_f32(m->forwardVel, 0.0f, 0.35f, 0.35f);
+        dragThreshold = m->action == ACT_LONG_JUMP ? 29.0f : 29.0f;
+        m->forwardVel = approach_f32(m->forwardVel, 0.0f, 0.29f, 0.29f);
 
         if (m->input & INPUT_NONZERO_ANALOG) {
             intendedDYaw = m->intendedYaw - m->faceAngle[1];
@@ -220,8 +220,8 @@ void update_air_without_turn(struct MarioState *m) {
     f32 intendedMag;
 
     if (!check_horizontal_wind(m)) {
-        dragThreshold = m->action == ACT_LONG_JUMP ? 48.0f : 32.0f;
-        m->forwardVel = approach_f32(m->forwardVel, 0.0f, 0.35f, 0.35f);
+        dragThreshold = m->action == ACT_LONG_JUMP ? 29.0f : 29.0f;
+        m->forwardVel = approach_f32(m->forwardVel, 0.0f, 0.29f, 0.29f);
 
         if (m->input & INPUT_NONZERO_ANALOG) {
             intendedDYaw = m->intendedYaw - m->faceAngle[1];
